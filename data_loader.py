@@ -38,7 +38,7 @@ def load_workbook(path: str | Path = DEFAULT_WORKBOOK) -> WorkbookData:
         )
     wb = openpyxl.load_workbook(path, data_only=True)
     
-    ws = wb["Saudi Data"]
+    ws = wb["Saudi_Data"]
     saudi_data = {}
     for row in ws.iter_rows(min_row=4, values_only=True):
         if not row or row[0] in (None, ""):
@@ -53,7 +53,7 @@ def load_workbook(path: str | Path = DEFAULT_WORKBOOK) -> WorkbookData:
                 pass
 
     nuclear_tech = _sheet_to_df(wb["Nuclear_Technologies"])
-    scenarios = _sheet_to_df(wb["Scenario Simulator"])
+    scenarios = _sheet_to_df(wb["Scenario_Simulator"])
     for col in ["Demand Multiplier", "Water", "Renewables"]:
         if col in scenarios.columns:
             scenarios[col] = pd.to_numeric(scenarios[col], errors="coerce")
@@ -64,7 +64,7 @@ def load_workbook(path: str | Path = DEFAULT_WORKBOOK) -> WorkbookData:
         if row and row[0] and isinstance(row[1], (int, float)):
             weights[row[0]] = row[1]
 
-    ws = wb["Carbon Emissions"]
+    ws = wb["Carbon_Emissions"]
     carbon = {}
     for row in ws.iter_rows(min_row=3, values_only=True):
         if row and row[0] and isinstance(row[1], (int, float)):
